@@ -23,13 +23,11 @@ Free services can change their limits, sleep policies and availability. There is
 
 ## Deploy
 
-1. Create a GitHub account if you do not already have one.
-2. Create a **public** repository, for example `india-bullion-tracker`.
-3. Upload all files and folders from this project to the repository root.
-4. Open https://share.streamlit.io/ and sign in with GitHub.
-5. Choose **Create app**, select your repository, branch `main`, and file `app.py`.
-6. Deploy. Streamlit will provide a public `*.streamlit.app` URL.
-7. To update prices, edit the relevant CSV file in GitHub and commit the changes. Streamlit will reload the app after the repository changes are deployed.
+1. Open this repository: https://github.com/maina006/gold-and-silver
+2. Open https://share.streamlit.io/ and sign in with GitHub.
+3. Choose **Create app**, select repository `maina006/gold-and-silver`, branch `main`, and file `app.py`.
+4. Deploy. Streamlit will provide a public `*.streamlit.app` URL.
+5. To update prices, edit the relevant CSV file in GitHub and commit the changes. Streamlit will reload the app after the repository changes are deployed.
 
 Official deployment guide: https://docs.streamlit.io/deploy/streamlit-community-cloud
 
