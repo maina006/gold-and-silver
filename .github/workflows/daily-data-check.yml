@@ -1,0 +1,52 @@
+name: Daily data freshness check
+
+on:
+  schedule:
+    - cron: "30 13 * * 1-5" # 19:00 IST, Monday-Friday
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate CSV structure and report latest dates
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+
+          required_files = {
+              "data/ibja_daily.csv": [
+                  "date", "session", "gold_999_inr_10g", "gold_916_inr_10g",
+                  "gold_750_inr_10g", "silver_999_inr_kg", "source_name", "source_url",
+              ],
+              "data/usd_inr.csv": ["date", "usd_inr", "source_name", "source_url"],
+              "data/international_daily.csv": [
+                  "date", "gold_usd_per_troy_oz", "silver_usd_per_troy_oz",
+                  "source_name", "source_url",
+              ],
+          }
+
+          for filename, required in required_files.items():
+              path = Path(filename)
+              if not path.exists():
+                  raise SystemExit(f"Missing required file: {filename}")
+              with path.open(newline="", encoding="utf-8") as handle:
+                  reader = csv.DictReader(handle)
+                  missing = set(required) - set(reader.fieldnames or [])
+                  if missing:
+                      raise SystemExit(f"{filename}: missing columns {sorted(missing)}")
+                  rows = list(reader)
+              dates = [row["date"] for row in rows if row.get("date")]
+              latest = max(dates) if dates else "NO DATA"
+              print(f"{filename}: {len(rows)} rows; latest date: {latest}")
+          PY
