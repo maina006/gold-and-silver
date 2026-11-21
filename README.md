@@ -43,7 +43,7 @@ Columns:
 `date,session,gold_999_inr_10g,gold_916_inr_10g,gold_750_inr_10g,silver_999_inr_kg,source_name,source_url`
 
 Example format only (not a market quote):
-`2026-11-21,PM,123456,113333,92592,150000,IBJA,https://www.ibja.in/`
+`2026-11-21,PM,123456,113333,92592,150000,IBJA,https://www.ibja.co/`
 
 Enter one row per date/session. Keep AM and PM as separate rows if both are available.
 
